@@ -12,6 +12,7 @@ const InputTextbox: Component<{
                 {children}
             </label>
             <input type={inputType}
+                   value={accountSys.signFormData[storingData]}
                    oninput={(e) => accountSys.setSignFormData(storingData, e.currentTarget.value)}
                    class="bg-transparent w-full h-16 text-plain text-2xl p-2 border-plain border-b focus:outline-none" />
         </div>

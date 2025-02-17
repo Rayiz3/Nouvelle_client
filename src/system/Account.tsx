@@ -37,7 +37,7 @@ class AccountSys {
     transitionDown = () => {
         if (this.signForm) {
             this.signForm.scrollIntoView({
-                behavior: "smooth", // Smooth scrolling
+                behavior: 'smooth',
                 block: "start", // Align the top of the element to the top of the viewport
             });
         }

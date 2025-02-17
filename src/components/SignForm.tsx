@@ -36,7 +36,10 @@ export const SigninForm: Component = () => {
                     Sign in
                 </button>
                 <div class="text-plain text-xl mt-7 cursor-pointer hover:text-white transition-colors"
-                     onClick={() => accountSys.setIsSignup(true)}>
+                     onClick={() => {
+                        accountSys.setIsSignup(true)
+                        accountSys.setSignFormData({name: '', email: '', password: ''})
+                     }}>
                     Register
                 </div>
             </div>
@@ -68,7 +71,10 @@ export const SignupForm: Component = () => {
                     Sign up
                 </button>
                 <div class="text-plain text-xl mt-7 cursor-pointer hover:text-white transition-colors"
-                     onClick={() => accountSys.setIsSignup(false)}>
+                     onClick={() => {
+                        accountSys.setIsSignup(false)
+                        accountSys.setSignFormData({name: '', email: '', password: ''})
+                     }}>
                     Go Back
                 </div>
             </div>
