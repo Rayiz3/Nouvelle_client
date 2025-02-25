@@ -1,6 +1,7 @@
 import { Component } from "solid-js";
 import { accountSys } from "../system/Account";
 import InputTextbox from "./InputTextbox";
+import { requestSys } from "../system/Request";
 
 
 const signinTransitionStyle = (sign: boolean) => {return `
@@ -67,7 +68,7 @@ export const SignupForm: Component = () => {
             </InputTextbox>
 
             <div class="flex flex-col items-center w-full">
-                <button class={buttonStyle}>
+                <button class={buttonStyle} onClick={() => requestSys.addUser()}>
                     Sign up
                 </button>
                 <div class="text-plain text-xl mt-7 cursor-pointer hover:text-white transition-colors"
