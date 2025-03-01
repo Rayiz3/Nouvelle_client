@@ -1,10 +1,16 @@
 import { Accessor, createSignal, Setter } from "solid-js";
 import { createStore, SetStoreFunction } from "solid-js/store";
+import { requestSys } from "./Request";
+import { links } from "../properties/links";
 
 export interface signFormType {
     email: string;
     password: string;
     name: string;
+}
+
+export interface userType extends signFormType {
+    _id: { $oid: String };
 }
 
 class AccountSys {
@@ -42,6 +48,30 @@ class AccountSys {
             });
         }
     };
+
+    SignupHandler = async () => {
+        const response = await requestSys.addUser(this.signFormData)
+
+        if(response){
+            const data = await response.json();
+
+            if(response.status === 201) {
+                window.location.href = links.clientAddress+"/"
+            } else {
+                console.error('[Error] add user error :', data.message)
+            }
+        }
+    }
+
+    signinHandler = async () => {
+        const foundUser = await requestSys.getUserByEmail(this.signFormData.email);
+        
+        if (foundUser != null) {
+            window.location.href = links.clientAddress + "/";
+        } else {
+            console.log("login failed");
+        }
+    }
 }
 
 export const accountSys = new AccountSys();

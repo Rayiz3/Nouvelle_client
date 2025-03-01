@@ -33,7 +33,7 @@ export const SigninForm: Component = () => {
             </InputTextbox>
 
             <div class="flex flex-col items-center w-full">
-                <button class={buttonStyle}>
+                <button class={buttonStyle} onClick={() => accountSys.signinHandler()}>
                     Sign in
                 </button>
                 <div class="text-plain text-xl mt-7 cursor-pointer hover:text-white transition-colors"
@@ -68,7 +68,7 @@ export const SignupForm: Component = () => {
             </InputTextbox>
 
             <div class="flex flex-col items-center w-full">
-                <button class={buttonStyle} onClick={() => requestSys.addUser()}>
+                <button class={buttonStyle} onClick={() => accountSys.SignupHandler()}>
                     Sign up
                 </button>
                 <div class="text-plain text-xl mt-7 cursor-pointer hover:text-white transition-colors"
