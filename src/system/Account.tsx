@@ -1,4 +1,4 @@
-import { Accessor, createSignal, Setter } from "solid-js";
+import { Accessor, createEffect, createSignal, onMount, Setter } from "solid-js";
 import { createStore, SetStoreFunction } from "solid-js/store";
 import { requestSys } from "./Request";
 import { links } from "../properties/links";
@@ -10,7 +10,7 @@ export interface signFormType {
 }
 
 export interface userType extends signFormType {
-    _id: { $oid: String };
+    _id: { $oid: string };
 }
 
 class AccountSys {
@@ -25,6 +25,9 @@ class AccountSys {
     signFormData: signFormType
     setSignFormData: SetStoreFunction<signFormType>
 
+    curUser: userType
+    setCurUser: SetStoreFunction<userType>
+
     constructor() {
         ([this.isScrolledDown, this.setIsScrolledDown] = createSignal<boolean>(false)),
         ([this.isSignup, this.setIsSignup] = createSignal<boolean>(false)),
@@ -33,7 +36,24 @@ class AccountSys {
             email: "",
             password: "",
             name: ""
+        })),
+        ([this.curUser, this.setCurUser] = createStore<userType>({
+            _id: { $oid: '' },
+            email: '',
+            password: '',
+            name: ''
         }))
+
+        onMount(() => {
+            const savedUser = localStorage.getItem("curUser");
+            if(savedUser) {
+                this.setCurUser(JSON.parse(savedUser))
+            }
+        })
+
+        createEffect(() => {
+            localStorage.setItem("curUser", JSON.stringify(this.curUser));
+        })
     }
 
     scrollHandler = () => {
@@ -56,7 +76,7 @@ class AccountSys {
             const data = await response.json();
 
             if(response.status === 201) {
-                window.location.href = links.clientAddress+"/"
+                window.location.href = links.clientAddress+"/main"
             } else {
                 console.error('[Error] add user error :', data.message)
             }
@@ -67,7 +87,7 @@ class AccountSys {
         const foundUser = await requestSys.getUserByEmail(this.signFormData.email);
         
         if (foundUser != null) {
-            window.location.href = links.clientAddress + "/";
+            window.location.href = links.clientAddress + "/main";
         } else {
             console.log("login failed");
         }

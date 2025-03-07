@@ -7,7 +7,7 @@ class RequestSys {
 
     addUser = async (signFormData: signFormType) => {
         try {
-            const response = await fetch(`${links.serverAddress}/users/`, {
+            const response = await fetch(`${links.serverAddress}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(signFormData),
@@ -26,6 +26,7 @@ class RequestSys {
     getUserByEmail = async (email: string): Promise<userType | null> => {
         try {
             const response = await fetch(`${links.serverAddress}/user?email=${ encodeURIComponent(email)}`)
+            console.log(response)
             return await response.json() as userType
         }
         catch (error) {
