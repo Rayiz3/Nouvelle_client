@@ -9,6 +9,7 @@
     --color-plain: #d9d9d9;
     --text-size-title: 7.5rem;
     --text-size-startButton: 1.8rem;
+    --text-size-mid: 5rem;
 }
 
 @layer utilities {

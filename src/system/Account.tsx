@@ -46,13 +46,11 @@ class AccountSys {
 
         onMount(() => {
             const savedUser = localStorage.getItem("curUser");
+            console.log('local storage:', savedUser);
             if(savedUser) {
                 this.setCurUser(JSON.parse(savedUser))
+                console.log(this.curUser)
             }
-        })
-
-        createEffect(() => {
-            localStorage.setItem("curUser", JSON.stringify(this.curUser));
         })
     }
 
@@ -87,10 +85,16 @@ class AccountSys {
         const foundUser = await requestSys.getUserByEmail(this.signFormData.email);
         
         if (foundUser != null) {
+            localStorage.setItem("curUser", JSON.stringify(foundUser));
             window.location.href = links.clientAddress + "/main";
         } else {
             console.log("login failed");
         }
+    }
+
+    logoutHandler = () => {
+        localStorage.removeItem('curUser');
+        window.location.href = '/';
     }
 }
 
