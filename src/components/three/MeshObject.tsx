@@ -143,7 +143,7 @@ export class MeshObject extends ThreeObject {
         this.scene.add(this.mesh);
     }
 
-    toggle = (info: any) => {
+    toggle = (_info: any) => {
         // placeholder
     }
 

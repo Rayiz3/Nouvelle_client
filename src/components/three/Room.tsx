@@ -10,9 +10,9 @@ import { Cushion, CustomMeshObject, GLTFMeshObject, Lamp, LinkPost } from "./Mes
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import Player from "./Player";
 import { cannon } from "./Physics";
-import CannonDebugger from "cannon-es-debugger";
+//import CannonDebugger from "cannon-es-debugger";
 import { controller } from "./Controller";
-import { TextPlane, TextSprite } from "./Text";
+import { TextPlane } from "./Text";
 
 const Room: React.FC = () => {
     const config = useMyStore(state => state.config);
@@ -28,7 +28,7 @@ const Room: React.FC = () => {
         const scene = createScene();
         const lights = createLights();
         const gltfLoader = new GLTFLoader();
-        const cannonDebugger = CannonDebugger(scene, cannon.world, { color: 0x00ff00});
+        //const cannonDebugger = CannonDebugger(scene, cannon.world, { color: 0x00ff00});
 
         scene.add(camera);
         scene.add(...lights);
@@ -50,7 +50,7 @@ const Room: React.FC = () => {
             pivotGround: false
         })
 
-        const stage = new CustomMeshObject({
+        new CustomMeshObject({
             scene,
             name: 'stage',
             width: sizeStage,
@@ -119,7 +119,7 @@ const Room: React.FC = () => {
             scale: new THREE.Vector3(2, 1.5, 2),
         })
 
-        const lampL = new Lamp({
+        new Lamp({
             scene,
             name: 'lampL',
             loader: gltfLoader,
@@ -129,7 +129,7 @@ const Room: React.FC = () => {
             scale: new THREE.Vector3(1.5, 1.5, 1.5),
         })
 
-        const lampR = new Lamp({
+        new Lamp({
             scene,
             name: 'lampR',
             loader: gltfLoader,
@@ -139,7 +139,7 @@ const Room: React.FC = () => {
             scale: new THREE.Vector3(1.5, 1.5, 1.5),
         })
         
-        const links = config.links.map((link, i) => {
+        config.links.map((link, i) => {
             const position = (i < 3)
                 ? new THREE.Vector3(0.8 - i * 0.8, 0.4, -0.1)
                 : new THREE.Vector3(0.4 - (i-3) * 0.8, -0.4, -0.1)
@@ -177,7 +177,7 @@ const Room: React.FC = () => {
 
         // Text //
 
-        const labelStack = new TextPlane({
+        new TextPlane({
             scene,
             name: 'labelStack',
             text: '[기술 스택]',
@@ -187,7 +187,7 @@ const Room: React.FC = () => {
             rotation: new THREE.Euler(0, -Math.PI/2, 0),
         })
 
-        const labelLink = new TextPlane({
+        new TextPlane({
             scene,
             name: 'labelLink',
             text: '[참고 링크]',
