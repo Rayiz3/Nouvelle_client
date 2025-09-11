@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_3" data-name="레이어 3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ccc;
+      }
+
+      .cls-2 {
+        fill: #d9d9d9;
+      }
+
+      .cls-3 {
+        fill: #e6e6e6;
+      }
+    </style>
+  </defs>
+  <path class="cls-2" d="M80.19,2.41L12.82,41.3v77.79l67.37,38.9,67.37-38.9V41.3L80.19,2.41ZM145.46,117.88l-65.27,37.69L14.92,117.88V42.51L80.19,4.83l65.27,37.69v75.37Z"/>
+  <polygon class="cls-2" points="80.19 80.2 142.85 116.37 142.85 44.02 80.19 7.85 80.19 80.2"/>
+  <polygon class="cls-1" points="80.19 152.54 142.85 116.37 80.19 80.2 17.54 116.37 80.19 152.54"/>
+  <polygon class="cls-3" points="80.19 80.2 80.19 7.85 17.54 44.02 17.54 116.37 80.19 80.2"/>
+</svg>

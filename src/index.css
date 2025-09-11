@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&family=Jaro:opsz@6..72&family=Righteous&display=swap");
+@import "tailwindcss";
+
+
+@theme {
+    --color-main:  #3a4578;
+    --color-sub:   #f9c784;
+    --color-plain: #d9d9d9;
+    --text-size-title: 7.5rem;
+    --text-size-startButton: 1.8rem;
+    --text-size-mid: 5rem;
+}
+
+@layer utilities {
+    .font-inter {
+      font-family: 'Inter', sans-serif;
+    }
+  
+    .font-pretendard {
+        font-family: "Pretendard Variable", sans-serif;
+    }
+  
+    .font-gothic {
+        font-family: "Gothic A1", sans-serif;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+  }
