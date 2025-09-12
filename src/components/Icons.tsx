@@ -1,6 +1,6 @@
 import React from "react";
 import { useMainStore } from "../system/Main";
-import { links } from "../properties/links";
+//import { links } from "../properties/links";
 
 export const IconLike: React.FC<{style: string}> = ({style}) => {
     const isFilterOn = useMainStore(state => state.isFilterOn);
@@ -34,7 +34,7 @@ export const IconSearch: React.FC<{style: string}> = ({style}) => {
 export const IconLogout: React.FC = () => {
     const logoutHandler = () => {
       localStorage.removeItem("curUser");
-      window.location.href = `${links.clientAddress}/`;
+      window.location.href = `/`;
     }
 
     return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { useAccountStore, userType } from "../system/Account";
-import { links } from "../properties/links";
+//import { links } from "../properties/links";
 
 const Hexa: React.FC<{isMine: boolean, user: userType}> = ({isMine, user}) => {
     return (
@@ -12,7 +12,7 @@ const Hexa: React.FC<{isMine: boolean, user: userType}> = ({isMine, user}) => {
                 className="cursor-pointer transition-transform duration-500 ease-in-out hover:scale-105"
                 onClick={() => {
                     localStorage.setItem("curUser", JSON.stringify(useAccountStore.getState().curUser));
-                    window.location.href = `${links.clientAddress}/my?id=${user._id}`
+                    window.location.href = `/my?id=${user._id}`
                 }}
             >
                 <path className={isMine? 'fill-sub' : 'fill-plain'} d="M80.19,2.41L12.82,41.3v77.79l67.37,38.9,67.37-38.9V41.3L80.19,2.41ZM145.46,117.88l-65.27,37.69L14.92,117.88V42.51L80.19,4.83l65.27,37.69v75.37Z"/>

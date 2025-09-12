@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { configType, signFormType, userType } from "./Account";
-import { links } from "../properties/links";
+//import { links } from "../properties/links";
 
 interface RequestProps {
     getUsers: () => Promise<userType[]>

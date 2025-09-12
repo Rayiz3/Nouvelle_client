@@ -1,4 +1,4 @@
-import { links } from "../properties/links";
+//import { links } from "../properties/links";
 import { useAccountStore } from "../system/Account";
 import { useRequestStore } from "../system/Request";
 import InputTextbox from "./InputTextbox";
@@ -31,7 +31,7 @@ const SignForm: React.FC<{signin: boolean}> = ({signin}) => {
         const foundUser = await getUserByEmail(signFormData.email);
         if (foundUser) {
             localStorage.setItem("curUser", JSON.stringify(foundUser));
-            window.location.href = `${links.clientAddress}/main`;
+            window.location.href = `/main`;
         }
     };
     
@@ -40,7 +40,7 @@ const SignForm: React.FC<{signin: boolean}> = ({signin}) => {
         const foundUser = await getUserByEmail(signFormData.email);
         if (res?.status === 201) {
             localStorage.setItem("curUser", JSON.stringify(foundUser));
-            window.location.href = `${links.clientAddress}/main`;
+            window.location.href = `/main`;
         }
     };
 
