@@ -2,7 +2,7 @@
 
   # Nouvelle: 3D 포트폴리오 공유 사이트
 
-  [https://nupzukisfree.com/](https://nouvellevauge.netlify.app/)
+  [https://nouvellevauge.netlify.app/](https://nouvellevauge.netlify.app/)
 
 
   딱딱한 CV 폼에서 벗어나 나를 표현하는 새로운 방식을 찾아보세요!
