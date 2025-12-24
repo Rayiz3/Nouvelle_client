@@ -245,11 +245,7 @@ export class GLTFMeshObject extends MeshObject {
                 this.mesh.userData.unhover = this.unhover;
 
                 // cannonBody shaping
-                this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(
-                    this.width/2 * this.scale.x,
-                    this.height/2 * this.scale.y,
-                    this.depth/2 * this.scale.z
-                )));
+                this.buildCollider();
 
                 if (this.render) {
                     this.putCannonBody();
@@ -271,6 +267,14 @@ export class GLTFMeshObject extends MeshObject {
 
     callback(): void {
         // placeholder
+    }
+
+    protected buildCollider(): void {
+        this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(
+            this.width/2 * this.scale.x,
+            this.height/2 * this.scale.y,
+            this.depth/2 * this.scale.z
+        )));
     }
 }
 
@@ -321,6 +325,10 @@ export class Lamp extends GLTFMeshObject {
         this.light.intensity = 7;
 
         this.mesh?.add(this.light);
+    }
+    
+    override buildCollider(): void {
+        this.cannonBody.addShape(new CAN.Cylinder(this.width/2 * this.scale.x, this.width/2 * this.scale.y, this.height * this.scale.z));
     }
 }
 
@@ -420,5 +428,24 @@ export class Cushion extends GLTFMeshObject {
             parent: this.mesh,
         })
         this.hoverLabel.sprite.visible = false;
+    }
+
+    override buildCollider(): void {
+        this.cannonBody.addShape(
+            new CAN.Sphere(this.depth/2 * this.scale.z),
+            new CAN.Vec3(this.width/6 * this.scale.x, this.height/6 * this.scale.y, 0)
+        );
+        this.cannonBody.addShape(
+            new CAN.Sphere(this.depth/2 * this.scale.z),
+            new CAN.Vec3(-this.width/6 * this.scale.x, this.height/6 * this.scale.y, 0)
+        );
+        this.cannonBody.addShape(
+            new CAN.Sphere(this.depth/2 * this.scale.z),
+            new CAN.Vec3(this.width/6 * this.scale.x, -this.height/6 * this.scale.y, 0)
+        );
+        this.cannonBody.addShape(
+            new CAN.Sphere(this.depth/2 * this.scale.z),
+            new CAN.Vec3(-this.width/6 * this.scale.x, -this.height/6 * this.scale.y, 0)
+        );
     }
 }

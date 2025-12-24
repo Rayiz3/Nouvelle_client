@@ -27,7 +27,8 @@ class Player extends MeshObject {
         this.mesh.rotation.copy(this.rotation);
                 
         // cannonBody shaping
-        this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(this.width/2, this.height/2, this.depth/2)));
+        //this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(this.width/2, this.height/2, this.depth/2)));
+        this.cannonBody.addShape(new CAN.Cylinder(this.width/2, this.width/2, this.height));
 
         this.isJumping = false;
         

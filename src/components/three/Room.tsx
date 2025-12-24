@@ -10,7 +10,7 @@ import { Cushion, CustomMeshObject, GLTFMeshObject, Lamp, LinkPost } from "./Mes
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import Player from "./Player";
 import { cannon } from "./Physics";
-//import CannonDebugger from "cannon-es-debugger";
+import CannonDebugger from "cannon-es-debugger";
 import { controller } from "./Controller";
 import { TextPlane } from "./Text";
 
@@ -18,6 +18,7 @@ const Room: React.FC = () => {
     const config = useMyStore(state => state.config);
     const clock = new THREE.Clock();
     let delta = clock.getDelta();
+    const isDebugging = true;
 
     useEffect(() => {
         const canvas = document.getElementById('room') as HTMLCanvasElement;
@@ -28,7 +29,7 @@ const Room: React.FC = () => {
         const scene = createScene();
         const lights = createLights();
         const gltfLoader = new GLTFLoader();
-        //const cannonDebugger = CannonDebugger(scene, cannon.world, { color: 0x00ff00});
+        const cannonDebugger = CannonDebugger(scene, cannon.world, { color: 0x00ff00});
 
         scene.add(camera);
         scene.add(...lights);
@@ -159,7 +160,7 @@ const Room: React.FC = () => {
         })
 
         const cushions = config.stacks.map((stack, i) => {
-            const position = new THREE.Vector3(Math.random() * 0.2, 2 + Math.random() * 0.2, 0.3 * i - 0.5)
+            const position = new THREE.Vector3(Math.random() * 0.2 - 0.5, 2 + Math.random() * 0.2, 0.3 * i - 1.0)
             const rotation = new THREE.Euler(Math.random() * Math.PI/3, Math.random() * Math.PI/3, Math.random() * Math.PI/3);
 
             return new Cushion({
@@ -222,7 +223,7 @@ const Room: React.FC = () => {
             
             cannon.update(delta);
 
-            //cannonDebugger.update();
+            if (isDebugging) cannonDebugger.update();
 
             player.update();
             
