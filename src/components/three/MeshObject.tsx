@@ -286,19 +286,31 @@ export class LinkPost extends GLTFMeshObject {
         super(info);
         this.href = info.href;
 
+        const worldPos = new Vector3(this.position.x, this.position.y, this.position.z - 0.05);
+        const localPos = this.mesh.worldToLocal(worldPos.clone());
+
         this.textLink = new TextPlane({
             scene: this.scene,
+            parent: this.mesh,
             name: `${this.name}_link`,
             text: this.href,
             fontSize: 20,
             meshSize: new Vector2(0.5, 0.5),
             color: 'black',
             stroke: false,
-            refPosition: this.position,
-            position: new Vector3(0, 0, -0.05),
+            position: localPos,
             rotation: new Euler(0, Math.PI, 0),
         })
         
+        // function binding
+        this.textLink.mesh.userData.toggle = this.toggle;
+        this.textLink.mesh.userData.hover = this.hover;
+        this.textLink.mesh.userData.unhover = this.unhover;
+    }
+
+    toggle = () => {
+        //console.log("opening link:", this.href);
+        window.open(this.href, '_blank');
     }
 }
 
