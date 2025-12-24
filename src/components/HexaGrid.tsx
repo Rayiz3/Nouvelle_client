@@ -35,24 +35,27 @@ const HexaGrid: React.FC = () => {
         let rad = 1;
         let count = 0;
         let x = Math.sqrt(3) * size, y = 0;
-  
-        for (let side=0; side<6; ++side) {
-          for (let step=0; step<rad; ++step) {
-            if (count >= length) break;
-            result.push({x, y});
-            x += directions[side].x * size;
-            y += directions[side].y * size;
-            count++;
-          }
-          if (side === 4) {
-            if (count >= length) break;
-            result.push({x, y});
-            x += directions[side].x * size;
-            y += directions[side].y * size;
-            count++;
+        
+        while (count < length) {
+          for (let side=0; side<6; ++side) {
+            for (let step=0; step<rad; ++step) {
+              if (count >= length) break;
+              result.push({x, y});
+              x += directions[side].x * size;
+              y += directions[side].y * size;
+              count++;
+            }
+            if (side === 4) {
+              if (count >= length) break;
+              result.push({x, y});
+              x += directions[side].x * size;
+              y += directions[side].y * size;
+              count++;
+            }
           }
           rad++;
         }
+        
         useMainStore.getState().setHexPosition(result);
     }, [users, searchingQuery]);
 
