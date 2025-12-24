@@ -6,7 +6,7 @@ import createRenderer from "./Renderer";
 import createCamera from "./Camera";
 import createScene from "./Scene";
 import createLights from "./Light";
-import { Cushion, CustomMeshObject, GLTFMeshObject, Lamp, LinkPost } from "./MeshObject";
+import { Cushion, CustomMeshObject, GLTFMeshObject, Lamp, LinkPost, Poster } from "./MeshObject";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import Player from "./Player";
 import { cannon } from "./Physics";
@@ -18,7 +18,7 @@ const Room: React.FC = () => {
     const config = useMyStore(state => state.config);
     const clock = new THREE.Clock();
     let delta = clock.getDelta();
-    const isDebugging = false;
+    const isDebugging = true;
 
     useEffect(() => {
         const canvas = document.getElementById('room') as HTMLCanvasElement;
@@ -87,6 +87,19 @@ const Room: React.FC = () => {
             depth: sizeRoom,
             position: new THREE.Vector3((sizeRoom + thickRoom) / 2, 0, 0),
             color: config.color,
+        })
+
+        new Poster({
+            scene,
+            name: 'guide',
+            geometry: new THREE.PlaneGeometry(2.0, 1.0),
+            material: new THREE.MeshBasicMaterial({
+                map: new THREE.TextureLoader().load('guide.png'),
+                transparent: true,
+            }),
+            position: new THREE.Vector3(-0.5, 0, -0.5),
+            rotation: new THREE.Euler(-Math.PI / 2, 0, -Math.PI * 3/4),
+            color: '#ffffff',
         })
 
         // Objects - Items //
@@ -206,7 +219,7 @@ const Room: React.FC = () => {
             width: 1,
             height: 2,
             depth: 1,
-            position: new THREE.Vector3(-2, 2, -2),
+            position: new THREE.Vector3(-2.5, 2, -2.5),
             refPosition: new THREE.Vector3(0, floor.height, 0),
         });
         controller.agent = player;

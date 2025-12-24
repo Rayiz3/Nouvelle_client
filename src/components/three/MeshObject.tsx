@@ -180,17 +180,31 @@ export class CustomMeshObject extends MeshObject {
         this.mesh.scale.copy(this.scale);
         
         // cannonBody shaping
-        this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(
-            this.width/2 * this.scale.x,
-            this.height/2 * this.scale.y,
-            this.depth/2 * this.scale.z
-        )));
+        this.buildCollider()
 
         if (this.render) {
             this.putCannonBody();
             cannon.cannonObjects.push(this);
             this.putMesh();
         }
+    }
+
+    protected buildCollider(): void {
+        this.cannonBody.addShape(new CAN.Box(new CAN.Vec3(
+            this.width/2 * this.scale.x,
+            this.height/2 * this.scale.y,
+            this.depth/2 * this.scale.z
+        )));
+    }
+}
+
+export class Poster extends CustomMeshObject {
+    constructor (info: CustomMeshObjectType) {
+        super(info);
+    }
+
+    override buildCollider(): void {
+        
     }
 }
 
@@ -301,7 +315,7 @@ export class LinkPost extends GLTFMeshObject {
             position: localPos,
             rotation: new Euler(0, Math.PI, 0),
         })
-        
+
         // function binding
         this.textLink.mesh.userData.toggle = this.toggle;
         this.textLink.mesh.userData.hover = this.hover;
