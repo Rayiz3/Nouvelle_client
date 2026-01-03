@@ -38,6 +38,7 @@ interface GLTFMeshObjectType extends MeshObjectType {
     loader: GLTFLoader
     source: string
     mapSource?: string | Texture
+    normal?: boolean
 }
 
 interface LinkPostType extends GLTFMeshObjectType {
@@ -114,14 +115,14 @@ export class ThreeObject {
 }
 
 export class MeshObject extends ThreeObject {
-    color: string
+    color: string | null
     mesh: Object3D
     render: boolean
 
     constructor(info: MeshObjectType) {
         super(info);
         
-        this.color = info.color || 'white';
+        this.color = info.color || null;
         this.mesh = new Mesh();
         this.render = info.render ?? true;
         this.cannonBody.material = info.cannonMaterial || cannon.defaultMaterial;
@@ -162,7 +163,7 @@ export class CustomMeshObject extends MeshObject {
         super(info);
 
         const geometry = info.geometry || new BoxGeometry(this.width, this.height, this.depth);
-        const material = info.material || new MeshLambertMaterial({color: this.color});
+        const material = info.material || new MeshLambertMaterial({color: this.color || 'white'});
 
         // ground pivoting
         if (info.pivotGround ?? true){
@@ -209,8 +210,12 @@ export class Poster extends CustomMeshObject {
 }
 
 export class GLTFMeshObject extends MeshObject {
+    normal: boolean
+
     constructor(info: GLTFMeshObjectType) {
         super(info);
+        this.normal = info.normal ?? false;
+
         info.loader.load(
             info.source,
             (gltf: GLTF) => {
@@ -226,10 +231,18 @@ export class GLTFMeshObject extends MeshObject {
                                 ? info.mapSource
                                 : new TextureLoader().load(info.mapSource)
                             : null;
-                        mesh.material = new MeshLambertMaterial({
-                            color: texture? "white" : this.color,
-                            map: texture || (mesh.material as MeshLambertMaterial).map,
-                        })
+                        
+                        if (texture) {
+                            mesh.material = new MeshLambertMaterial({
+                                color: "white",
+                                map: texture,
+                            })
+                        } else if (this.color){
+                            mesh.material = new MeshLambertMaterial({
+                                color: this.color,
+                                map: (mesh.material as MeshLambertMaterial).map,
+                            })
+                        }
 
                         child.name = this.name;
                     }
@@ -240,6 +253,10 @@ export class GLTFMeshObject extends MeshObject {
                 const size = new Vector3();
                 box.getSize(size);
                 this.width = size.x, this.height = size.y, this.depth = size.z;
+                if (this.normal) {
+                    const maximum = Math.max(this.width, this.height, this.depth);
+                    this.scale.copy(new Vector3(this.scale.x / maximum, this.scale.y / maximum, this.scale.z / maximum));
+                }
 
                 // ground pivoting
                 if (info.pivotGround ?? true){

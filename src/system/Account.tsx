@@ -5,6 +5,7 @@ export interface configType {
     color: string;
     stacks: string[];
     links: string[];
+    iconMeshUrl: string;
 }
 
 export interface signFormType {
@@ -58,6 +59,7 @@ export const useAccountStore = create<AccountProps>((set, get) => ({
             color: '#ffffff',
             stacks: [],
             links: [],
+            iconMeshUrl: '',
         }
     },
     setCurUser: (v) => set({curUser: v}),

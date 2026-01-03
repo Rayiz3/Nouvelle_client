@@ -51,6 +51,7 @@ const MyPage: React.FC = () => {
         state.setEditingColor(loadedConfig.color);
         state.setEditingStacks(loadedConfig.stacks);
         state.setEditingLinks(loadedConfig.links);
+        state.setEditingIconMeshUrl(loadedConfig.iconMeshUrl);
         state.setStackQuery("");
         state.setIsEdit(true);
     }

@@ -11,7 +11,7 @@ const StackCard: React.FC<StackCardProps> = ({name, slug, color}) => {
     return (
         <button className="
             flex flex-col items-center
-            w-[88px] h-[108px] ml-1 mr-1 rounded-lg shadow-xl
+            w-[88px] min-w-[88px] h-[108px] ml-1 mr-1 rounded-lg shadow-xl
             cursor-pointer transition hover:opacity-60"
             style={{"backgroundColor": `#${color}`}}
             onClick={() => useMyStore.getState().removeEditingStacks(slug)}>

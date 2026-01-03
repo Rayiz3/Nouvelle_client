@@ -18,7 +18,7 @@ const Room: React.FC = () => {
     const config = useMyStore(state => state.config);
     const clock = new THREE.Clock();
     let delta = clock.getDelta();
-    const isDebugging = true;
+    const isDebugging = false;
 
     useEffect(() => {
         const canvas = document.getElementById('room') as HTMLCanvasElement;
@@ -131,6 +131,17 @@ const Room: React.FC = () => {
             position: new THREE.Vector3(-0.8, 0, 0),
             rotation: new THREE.Euler(0, -Math.PI, 0),
             scale: new THREE.Vector3(2, 1.5, 2),
+        })
+
+        new GLTFMeshObject({
+            scene,
+            name: 'iconMesh',
+            loader: gltfLoader,
+            source: config.iconMeshUrl,
+            scale: new THREE.Vector3(1, 1, 1),
+            position: new THREE.Vector3(2, 1, 2),
+            rotation: new THREE.Euler(-Math.PI/2, 0, 0),
+            normal: true,
         })
 
         new Lamp({

@@ -1,15 +1,28 @@
 import * as THREE from 'three';
 
-const createCamera = () => {
-    const camera = new THREE.PerspectiveCamera(
-        60, // fov
-        window.innerWidth / window.innerHeight, // aspect
-        0.5, // near
-        100 // far
-    );
-    camera.position.set(4, 3, 4);
-    camera.lookAt(10, 2, 10);
-    camera.name = "camera";
+interface cameraProps {
+    fov?: number;
+    aspect?: number;
+    near?: number;
+    far?: number;
+    position?: [number, number, number];
+    lookAt?: [number, number, number];
+    name?: string;
+}
+
+const createCamera = ({
+    fov = 60,
+    aspect = window.innerWidth / window.innerHeight,
+    near = 0.5,
+    far = 100,
+    position = [4, 3, 4],
+    lookAt = [10, 2, 10],
+    name = "camera"
+}: cameraProps = {}) => {
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.set(...position);
+    camera.lookAt(...lookAt);
+    camera.name = name;
     return camera;
 };
 

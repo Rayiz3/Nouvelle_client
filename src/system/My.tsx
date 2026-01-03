@@ -36,6 +36,13 @@ interface MyProps {
     maxLinkIdx: number
     focusedLinkIdx: number
     setFocusedLinkIdx: (v: number) => void
+
+    prompt: string
+    setPrompt: (v: string) => void
+    editingIconMeshUrl: string
+    setEditingIconMeshUrl: (v: string) => void
+    isGenerating: boolean
+    setIsGenerating: (v: boolean) => void
 }
 
 export const useMyStore = create<MyProps>((set) => ({
@@ -49,6 +56,7 @@ export const useMyStore = create<MyProps>((set) => ({
         color: '#ffffff',
         stacks: [],
         links: [],
+        iconMeshUrl: '',
     },
     setConfig: (v) => set({config: v}),
     editingColor: '#ffffff',
@@ -93,4 +101,11 @@ export const useMyStore = create<MyProps>((set) => ({
     maxLinkIdx: 5,
     focusedLinkIdx: -1,
     setFocusedLinkIdx: (v) => set({focusedLinkIdx: v}),
+
+    prompt: '',
+    setPrompt: (v) => set({prompt: v}),
+    editingIconMeshUrl: '',
+    setEditingIconMeshUrl: (v) => set({editingIconMeshUrl: v}),
+    isGenerating: false,
+    setIsGenerating: (v) => set({isGenerating: v}),
 }))

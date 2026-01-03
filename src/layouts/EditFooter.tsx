@@ -13,6 +13,7 @@ const EditFooter: React.FC = () => {
             color: myStore.editingColor,
             stacks: myStore.editingStacks,
             links: myStore.editingLinks,
+            iconMeshUrl: myStore.editingIconMeshUrl,
         }
         console.log("newConfig:", newConfig);
         myStore.setConfig(newConfig);

@@ -8,6 +8,7 @@ interface RequestProps {
     getUserById: (v: string) => Promise<userType | null>
     getUserByEmail: (v: string) => Promise<userType | null>
     setUserConfigById: (id: string, config: configType) => Promise<userType | null>
+    addIconMeshUrlById: (id: string, prompt: string) => Promise<string | null>
 }
 
 export const useRequestStore = create<RequestProps>(() => ({
@@ -81,6 +82,27 @@ export const useRequestStore = create<RequestProps>(() => ({
             if (response.status === 200) {
                 return await response.json() as userType;
             } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('[Error] set user error:', error);
+            return null;
+        }
+    },
+
+    addIconMeshUrlById: async (id: string, prompt: string): Promise<string | null> => {
+        try {
+            const response = await fetch(`${links.serverAddress}/meshes?id=${encodeURIComponent(id)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 'prompt' : prompt }),
+            });
+            const responseJson = await response.json();
+
+            if (response.status === 201) {
+                return await responseJson['iconMeshUrl'];
+            } else {
+                console.log(`response error ${response.status}:`, responseJson);
                 return null;
             }
         } catch (error) {
