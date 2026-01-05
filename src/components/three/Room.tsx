@@ -39,6 +39,7 @@ const Room: React.FC = () => {
         const sizeStage = 10;
         const sizeRoom = 7;
         const thickRoom = 0.4;
+        const thickPillar = thickRoom * 1.5;
 
         new CustomMeshObject({
             scene,
@@ -48,7 +49,33 @@ const Room: React.FC = () => {
             depth: 100,
             position: new THREE.Vector3(0, -0.05, 0),
             geometry: new THREE.CylinderGeometry(50, 50, 0.1, 32, 1),
-            pivotGround: false
+            pivotGround: false,
+            render: false
+        })
+
+        const field = new GLTFMeshObject({
+            scene,
+            name: 'field',
+            loader: gltfLoader,
+            source: 'glb/land.glb',
+            width: 100,
+            height: 0.1,
+            depth: 100,
+            position: new THREE.Vector3(0, -0.3, 0),
+            scale: new THREE.Vector3(1.5, 1.0, 1.5),
+            autoCannon: false
+        })
+
+        new CustomMeshObject({
+            scene,
+            name: 'water',
+            width: 100,
+            height: 0.1,
+            depth: 100,
+            color: '#5F4F9D',
+            refPosition: field.position,
+            position: new THREE.Vector3(0, -0.5, 0),
+            scale: new THREE.Vector3(1.5, 1.0, 1.5),
         })
 
         new CustomMeshObject({
@@ -86,6 +113,36 @@ const Room: React.FC = () => {
             height: sizeRoom,
             depth: sizeRoom,
             position: new THREE.Vector3((sizeRoom + thickRoom) / 2, 0, 0),
+            color: config.color,
+        })
+
+        new CustomMeshObject({
+            scene,
+            name: 'pillarL',
+            width: thickPillar,
+            height: sizeRoom,
+            depth: thickPillar,
+            position: new THREE.Vector3((sizeRoom + thickPillar) / 2, 0, -(sizeRoom + thickPillar) / 2),
+            color: config.color,
+        })
+
+        new CustomMeshObject({
+            scene,
+            name: 'pillarM',
+            width: thickPillar,
+            height: sizeRoom,
+            depth: thickPillar,
+            position: new THREE.Vector3((sizeRoom + thickPillar) / 2, 0, (sizeRoom + thickPillar) / 2),
+            color: config.color,
+        })
+
+        new CustomMeshObject({
+            scene,
+            name: 'pillarR',
+            width: thickPillar,
+            height: sizeRoom,
+            depth: thickPillar,
+            position: new THREE.Vector3(-(sizeRoom + thickPillar) / 2, 0, (sizeRoom + thickPillar) / 2),
             color: config.color,
         })
 
@@ -223,7 +280,7 @@ const Room: React.FC = () => {
             text: '[기술 스택]',
             fontSize: 44,
             refPosition: table.position,
-            position: new THREE.Vector3(0.7, 2, 0),
+            position: new THREE.Vector3(0.69, 2, 0),
             rotation: new THREE.Euler(0, -Math.PI/2, 0),
         })
 

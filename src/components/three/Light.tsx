@@ -26,6 +26,38 @@ const createLights = () => {
     pointLight.name = "light_point"
     lights.push(pointLight);
 
+    // sun light
+    const glowMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+            viewVector: {value: new THREE.Vector3()},
+            c: {value: 0.5},
+            p: {value: 2.0},
+        },
+        vertexShader: `
+            varying vec3 vNormal;
+            void main() {
+                vNormal = normalize(normalMatrix * normal);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform float c;
+            uniform float p;
+            varying vec3 vNormal;
+            void main() {
+                float intensity = pow(c - dot(vNormal, vec3(0.0, 0.0, 1.0)), p);
+                gl_FragColor = vec4(1.0, 0.8, 0.4, 1.0) * intensity;
+            }
+        `,
+        side: THREE.BackSide,
+        blending: THREE.AdditiveBlending,
+        transparent: true,
+    });
+    
+    const glowMesh = new THREE.Mesh(new THREE.SphereGeometry(3, 32, 32), glowMaterial); // Slightly larger sphere
+    glowMesh.position.set(60, 30, 0)
+    lights.push(glowMesh);
+
     return lights;
 };
 

@@ -39,6 +39,7 @@ interface GLTFMeshObjectType extends MeshObjectType {
     source: string
     mapSource?: string | Texture
     normal?: boolean
+    autoCannon?: boolean
 }
 
 interface LinkPostType extends GLTFMeshObjectType {
@@ -211,10 +212,12 @@ export class Poster extends CustomMeshObject {
 
 export class GLTFMeshObject extends MeshObject {
     normal: boolean
+    autoCannon: boolean
 
     constructor(info: GLTFMeshObjectType) {
         super(info);
         this.normal = info.normal ?? false;
+        this.autoCannon = info.autoCannon ?? true;
 
         info.loader.load(
             info.source,
@@ -252,7 +255,13 @@ export class GLTFMeshObject extends MeshObject {
                 const box = new Box3().setFromObject(gltf.scene);
                 const size = new Vector3();
                 box.getSize(size);
-                this.width = size.x, this.height = size.y, this.depth = size.z;
+                
+                if (this.autoCannon){
+                    this.width = size.x,
+                    this.height = size.y,
+                    this.depth = size.z;
+                }
+                
                 if (this.normal) {
                     const maximum = Math.max(this.width, this.height, this.depth);
                     this.scale.copy(new Vector3(this.scale.x / maximum, this.scale.y / maximum, this.scale.z / maximum));
