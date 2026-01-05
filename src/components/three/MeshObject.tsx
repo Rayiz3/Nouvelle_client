@@ -492,3 +492,24 @@ export class Cushion extends GLTFMeshObject {
         );
     }
 }
+
+export class Display extends GLTFMeshObject {
+    light: PointLight
+
+    constructor (info: GLTFMeshObjectType) {
+        super(info);
+        this.light = new PointLight('white', 1,5);
+    }
+
+    // overriding due to the asynchronus task of GLTFMeshObject loading
+    override callback(): void {
+        super.callback();
+        
+        this.light.castShadow = true;
+        this.light.position.set(this.position.x, this.position.y+1.0, this.position.z);
+        this.light.name = "light_display";
+        this.light.intensity = 1;
+
+        this.scene.add(this.light);
+    }
+}

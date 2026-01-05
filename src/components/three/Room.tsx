@@ -6,7 +6,7 @@ import createRenderer from "./Renderer";
 import createCamera from "./Camera";
 import createScene from "./Scene";
 import createLights from "./Light";
-import { Cushion, CustomMeshObject, GLTFMeshObject, Lamp, LinkPost, Poster } from "./MeshObject";
+import { Cushion, CustomMeshObject, Display, GLTFMeshObject, Lamp, LinkPost, Poster } from "./MeshObject";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import Player from "./Player";
 import { cannon } from "./Physics";
@@ -108,6 +108,7 @@ const Room: React.FC = () => {
         const refPosWallR = wallR.position.z - wallR.depth/2;
         const refPosWallL = wallL.position.x - wallL.width/2;
 
+        // 2, 1.2, 0.2
         const board = new GLTFMeshObject({
             scene,
             name: 'board',
@@ -121,6 +122,7 @@ const Room: React.FC = () => {
             scale: new THREE.Vector3(1.5, 1.5, 1.5),
         })
 
+        // 0.7, 0.5, 1.4
         const table = new GLTFMeshObject({
             scene,
             name: 'table',
@@ -128,22 +130,35 @@ const Room: React.FC = () => {
             source: 'glb/table.glb',
             color: '#1c1f24',
             refPosition: new THREE.Vector3(refPosWallL, refPosGround, 0),
-            position: new THREE.Vector3(-0.8, 0, 0),
+            position: new THREE.Vector3(-0.7, 0, -0.1),
             rotation: new THREE.Euler(0, -Math.PI, 0),
             scale: new THREE.Vector3(2, 1.5, 2),
         })
 
-        new GLTFMeshObject({
+        const display = new Display({
+            scene,
+            name: 'display',
+            loader: gltfLoader,
+            source: 'glb/display.glb',
+            color: '#654839',
+            refPosition: new THREE.Vector3(0, refPosGround, 0),
+            position: new THREE.Vector3(2.75, 0, 2.75),
+            rotation: new THREE.Euler(0, -Math.PI/2, 0),
+        })
+
+        const iconMesh = new GLTFMeshObject({
             scene,
             name: 'iconMesh',
             loader: gltfLoader,
             source: config.iconMeshUrl,
             scale: new THREE.Vector3(1, 1, 1),
-            position: new THREE.Vector3(2, 1, 2),
-            rotation: new THREE.Euler(-Math.PI/2, 0, 0),
+            refPosition: display.position,
+            position: new THREE.Vector3(0, 1, 0),
+            rotation: new THREE.Euler(-Math.PI/2, Math.PI/8, 0),
             normal: true,
         })
 
+        // 0.46, 1.8, 0.46
         new Lamp({
             scene,
             name: 'lampL',
@@ -244,6 +259,10 @@ const Room: React.FC = () => {
         // Update Loop //
         const update = () => {
             delta = clock.getDelta();
+
+            iconMesh.mesh.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI/8 * delta);
+            const iconMeshQuat = iconMesh.mesh.quaternion;
+            iconMesh.cannonBody.quaternion.set(iconMeshQuat.x, iconMeshQuat.y, iconMeshQuat.z, iconMeshQuat.w);
             
             cannon.update(delta);
 
